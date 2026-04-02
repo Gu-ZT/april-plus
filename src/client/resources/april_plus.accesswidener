@@ -1,0 +1,5 @@
+classTweaker v1 official
+
+accessible class net/minecraft/client/Options$OptionAccess
+accessible class net/minecraft/client/OptionInstance$SliderableValueSet
+accessible class net/minecraft/client/OptionInstance$ValueSet

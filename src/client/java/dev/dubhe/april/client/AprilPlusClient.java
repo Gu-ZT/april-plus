@@ -6,5 +6,6 @@ public class AprilPlusClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        KeyBindings.registerBindings();
     }
 }

@@ -4,6 +4,10 @@
   "package": "dev.dubhe.april.mixin.client",
   "compatibilityLevel": "JAVA_25",
   "client": [
+    "OptionInstanceMixin",
+    "OptionsMixin"
+  ],
+  "mixins": [
   ],
   "injectors": {
     "defaultRequire": 1

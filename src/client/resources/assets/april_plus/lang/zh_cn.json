@@ -72,5 +72,8 @@
   "living_blocks.group.red": "红色",
   "living_blocks.group.yellow": "黄色",
   "potion.potency.0": "",
-  "selectWorld.gameMode.spectator.line2": ""
+  "selectWorld.gameMode.spectator.line2": "",
+
+  "key.category.april_plus.mappings": "⑨++",
+  "key.april_plus.gamma_toggle": "切换 Gamma"
 }
