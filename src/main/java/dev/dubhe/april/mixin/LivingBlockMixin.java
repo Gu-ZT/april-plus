@@ -44,10 +44,7 @@ public class LivingBlockMixin {
             List<LivingBlock> entities = target.level().getEntities(
                 EntityTypeTest.forClass(LivingBlock.class),
                 target.getBoundingBox().inflate(5, 5, 5),
-                tb -> {
-                    ItemStack.isSameItem(tb.getItemStack(), target.getItemStack());
-                    return tb.canBeControlledBy(player);
-                }
+                tb -> ItemStack.isSameItem(tb.getItemStack(), target.getItemStack()) && tb.canBeControlledBy(player)
             );
             for (LivingBlock entity : entities) {
                 entity.setOwner(player);
