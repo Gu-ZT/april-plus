@@ -1,4 +1,6 @@
 {
+  "overlay.no_blocks": "Selected group contains no blocks in the area",
+
   "key.category.april_plus.mappings": "April Plus",
   "key.april_plus.gamma_toggle": "Gamma Toggle",
   "key.april_plus.free_camera": "Free Camera"
