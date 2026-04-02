@@ -1,14 +1,8 @@
 name: Update Release Asset
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - .github/workflows/release.yml
-      - src/**
-      - gradle/**
-      - build.gradle
-      - gradle.properties
-      - settings.gradle
+  release:
+    types: [ published ]
 
 jobs:
   build:
