@@ -4,7 +4,9 @@
   "package": "dev.dubhe.april.mixin",
   "compatibilityLevel": "JAVA_25",
   "mixins": [
-    "PlayerMixin"
+    "PlayerMixin",
+    "LivingBlockMixin",
+    "LivingBlockAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
