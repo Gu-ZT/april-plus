@@ -4,6 +4,7 @@ import dev.dubhe.april.extension.LivingBlockExtension;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.livingblock.LivingBlock;
+import net.minecraft.world.entity.livingblock.LivingBlockGroup;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ActionItem;
 import net.minecraft.world.item.ItemStack;
@@ -11,6 +12,7 @@ import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
+import java.util.Objects;
 
 public class InteractImprovements {
     @SuppressWarnings("resource")
@@ -28,20 +30,23 @@ public class InteractImprovements {
                 List<LivingBlock> entities = target.level().getEntities(
                     EntityTypeTest.forClass(LivingBlock.class),
                     target.getBoundingBox().inflate(10, 10, 10),
-                    tb -> tb.isOwnedBy(player)
+                    tb -> tb.isOwnedBy(player) && Objects.equals(tb.getGroup(), target.getGroup())
                 );
                 target.setOwner(null);
                 target.setSelected(false);
                 for (LivingBlock entity : entities) {
                     entity.setOwner(null);
                     entity.setSelected(false);
+                    entity.setGroup(LivingBlockGroup.NONE);
                 }
                 return true;
             } else if (selected) {
                 List<LivingBlock> entities = target.level().getEntities(
                     EntityTypeTest.forClass(LivingBlock.class),
                     target.getBoundingBox().inflate(5, 5, 5),
-                    tb -> ItemStack.isSameItem(tb.getItemStack(), target.getItemStack()) && tb.canBeControlledBy(player) && !tb.isOwnedBy(player)
+                    tb -> ItemStack.isSameItem(tb.getItemStack(), target.getItemStack())
+                          && tb.canBeControlledBy(player)
+                          && !tb.isOwnedBy(player)
                 );
                 for (LivingBlock entity : entities) {
                     InteractImprovements.interact(entity, player, hand, location);
