@@ -75,5 +75,6 @@
   "selectWorld.gameMode.spectator.line2": "",
 
   "key.category.april_plus.mappings": "⑨++",
-  "key.april_plus.gamma_toggle": "切换 Gamma"
+  "key.april_plus.gamma_toggle": "切换 Gamma",
+  "key.april_plus.free_camera": "灵魂出窍"
 }

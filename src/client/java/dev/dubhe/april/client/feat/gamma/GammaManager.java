@@ -1,4 +1,4 @@
-package dev.dubhe.april.client.feat;
+package dev.dubhe.april.client.feat.gamma;
 
 public class GammaManager {
     private static double value = 1.0;

@@ -4,10 +4,15 @@
   "package": "dev.dubhe.april.mixin.client",
   "compatibilityLevel": "JAVA_25",
   "client": [
-    "OptionInstanceMixin",
-    "OptionsMixin"
+    "gamma.OptionInstanceMixin",
+    "gamma.OptionsMixin"
   ],
   "mixins": [
+    "camera.CameraMixin",
+    "camera.LivingEntityRendererMixin",
+    "camera.MinecraftMixin",
+    "camera.MixinGameRenderer",
+    "camera.MouseHandlerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -1,8 +1,8 @@
-package dev.dubhe.april.mixin.client;
+package dev.dubhe.april.mixin.client.gamma;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import dev.dubhe.april.client.feat.GammaDouble;
+import dev.dubhe.april.client.feat.gamma.GammaDouble;
 import net.minecraft.client.OptionInstance;
 import net.minecraft.client.Options;
 import org.spongepowered.asm.mixin.Mixin;
@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import java.util.function.Consumer;
 
 @Mixin(Options.class)
-public class OptionsMixin {
+abstract class OptionsMixin {
     @WrapOperation(
         method = "<init>",
         at = @At(

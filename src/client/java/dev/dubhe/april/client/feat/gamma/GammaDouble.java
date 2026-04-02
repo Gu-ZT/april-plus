@@ -1,4 +1,4 @@
-package dev.dubhe.april.client.feat;
+package dev.dubhe.april.client.feat.gamma;
 
 
 import com.mojang.serialization.Codec;

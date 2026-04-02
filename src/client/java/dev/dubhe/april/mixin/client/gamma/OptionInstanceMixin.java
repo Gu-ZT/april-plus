@@ -1,6 +1,6 @@
-package dev.dubhe.april.mixin.client;
+package dev.dubhe.april.mixin.client.gamma;
 
-import dev.dubhe.april.client.feat.GammaManager;
+import dev.dubhe.april.client.feat.gamma.GammaManager;
 import net.minecraft.client.OptionInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.contents.TranslatableContents;
@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(OptionInstance.class)
-public class OptionInstanceMixin<T> {
+abstract class OptionInstanceMixin<T> {
     @Shadow
     @Final
     private Component caption;
