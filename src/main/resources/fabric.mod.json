@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "april_plus",
+  "version": "${version}",
+  "name": "AprilPlus",
+  "description": "A April Fool's version plus mod",
+  "authors": [],
+  "contact": {},
+  "license": "LGPL-3.0",
+  "icon": "assets/april_plus/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "fabric-datagen": [
+      "dev.dubhe.april.client.AprilPlusDataGenerator"
+    ],
+    "client": [
+      "dev.dubhe.april.client.AprilPlusClient"
+    ],
+    "main": [
+      "dev.dubhe.april.AprilPlus"
+    ]
+  },
+  "mixins": [
+    "april_plus.mixins.json",
+    {
+      "config": "april_plus.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
