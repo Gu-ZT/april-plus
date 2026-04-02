@@ -12,7 +12,8 @@
     "camera.LivingEntityRendererMixin",
     "camera.MinecraftMixin",
     "camera.MixinGameRenderer",
-    "camera.MouseHandlerMixin"
+    "camera.MouseHandlerMixin",
+    "crashfix.CreativeModeInventoryScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
