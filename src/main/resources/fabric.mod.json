@@ -31,5 +31,6 @@
     "fabricloader": ">=${loader_version}",
     "fabric-api": "*",
     "minecraft": "26.1.1-alpha.26.14.a"
-  }
+  },
+  "accessWidener": "april_plus.accesswidener"
 }

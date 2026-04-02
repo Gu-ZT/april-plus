@@ -3,5 +3,13 @@
 
   "key.category.april_plus.mappings": "April Plus",
   "key.april_plus.gamma_toggle": "Gamma Toggle",
-  "key.april_plus.free_camera": "Free Camera"
+  "key.april_plus.free_camera": "Free Camera",
+  "key.april_plus.group_none": "Group None",
+  "key.april_plus.group_red": "Group Red",
+  "key.april_plus.group_blue": "Group Blue",
+  "key.april_plus.group_lime": "Group Lime",
+  "key.april_plus.group_yellow": "Group Yellow",
+  "key.april_plus.group_purple": "Group Purple",
+  "key.april_plus.group_aqua": "Group Aqua",
+  "key.april_plus.group_all": "Group All"
 }

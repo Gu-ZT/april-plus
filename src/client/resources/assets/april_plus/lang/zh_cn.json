@@ -64,7 +64,7 @@
   "item.minecraft.select_action": "选择",
   "item.minecraft.select_group_action.details": "已选组别：%s",
   "living_blocks.group.all": "全部",
-  "living_blocks.group.aqua": "水色",
+  "living_blocks.group.aqua": "青色",
   "living_blocks.group.blue": "蓝色",
   "living_blocks.group.lime": "黄绿色",
   "living_blocks.group.none": "无",
@@ -77,5 +77,13 @@
   "key.category.april_plus.mappings": "⑨++",
   "key.april_plus.gamma_toggle": "伽马覆写",
   "key.april_plus.free_camera": "灵魂出窍",
-  "overlay.no_blocks": "所选组在该区域内不包含任何方块"
+  "overlay.no_blocks": "所选组在该区域内不包含任何方块",
+  "key.april_plus.group_none": "无",
+  "key.april_plus.group_red": "红色",
+  "key.april_plus.group_blue": "蓝色",
+  "key.april_plus.group_lime": "黄绿色",
+  "key.april_plus.group_yellow": "黄色",
+  "key.april_plus.group_purple": "紫色",
+  "key.april_plus.group_aqua": "青色",
+  "key.april_plus.group_all": "全部"
 }

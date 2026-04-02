@@ -1,5 +1,6 @@
 package dev.dubhe.april;
 
+import dev.dubhe.april.network.ModNetworks;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.resources.Identifier;
 
@@ -8,6 +9,7 @@ public class AprilPlus implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        ModNetworks.register();
     }
 
     public static Identifier identifier(String path) {
