@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_25",
   "mixins": [
     "BeCraftingIngredientMixin",
+    "LivingBlockCCEMixin",
     "LivingBlockMixin",
     "PlayerMixin",
     "SmeltNearbyLivingBlockBehaviorMixin"
