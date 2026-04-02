@@ -85,11 +85,11 @@ jobs:
           dependencies: |
             fabric-api@${{ steps.properties.outputs.fabric_version }}(required){modrinth:P7dR8mSH}{curseforge:306612}
 
-          modrinth-id: ?!
+          modrinth-id: KTFN0xh3
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           modrinth-featured: true
 
-          curseforge-id: ?!
+          curseforge-id: 1502586
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
 
           files: |
