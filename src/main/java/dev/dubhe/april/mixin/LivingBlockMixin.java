@@ -15,7 +15,9 @@ import net.minecraft.world.entity.livingblock.interact.OnInteract;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ActionItem;
 import net.minecraft.world.item.GroupAction;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
@@ -36,6 +38,12 @@ abstract class LivingBlockMixin extends Entity implements LivingBlockExtension {
     @Shadow
     @Final
     private static EntityDataAccessor<Boolean> DATA_PLAYER_INTERACTED;
+
+    @Shadow
+    public abstract ItemStack getItemStack();
+
+    @Shadow public abstract BlockState getBlockState();
+
     @Unique
     @Nullable
     private Player aprilPlus$lastInteractPlayer;
@@ -105,5 +113,13 @@ abstract class LivingBlockMixin extends Entity implements LivingBlockExtension {
     @Inject(method = "readAdditionalSaveData", at = @At("RETURN"))
     private void onLoad(ValueInput input, CallbackInfo ci) {
         this.entityData.set(DATA_PLAYER_INTERACTED, input.getBooleanOr("player_interacted", false));
+    }
+
+    @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
+    private void tick(CallbackInfo ci) {
+        if (this.getItemStack().isEmpty() || this.getBlockState().isAir()) {
+            this.discard();
+            ci.cancel();
+        }
     }
 }
