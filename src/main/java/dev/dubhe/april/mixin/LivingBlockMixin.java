@@ -2,27 +2,42 @@ package dev.dubhe.april.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
+import dev.dubhe.april.extension.LivingBlockExtension;
+import dev.dubhe.april.feat.interact.InteractImprovements;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.livingblock.LivingBlock;
+import net.minecraft.world.entity.livingblock.interact.OnInteract;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ActionItem;
 import net.minecraft.world.item.GroupAction;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.entity.EntityTypeTest;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 
-import java.util.List;
 import javax.annotation.Nullable;
 
 @Mixin(LivingBlock.class)
-public class LivingBlockMixin {
+abstract class LivingBlockMixin extends Entity implements LivingBlockExtension {
+    @Shadow
+    private OnInteract onInteract;
     @Unique
     @Nullable
-    private Player lastInteractPlayer;
+    private Player aprilPlus$lastInteractPlayer;
     @Unique
-    private long lastInteractTime = 0;
+    private long aprilPlus$lastInteractTime = 0;
+    @Unique
+    private boolean aprilPlus$lastShiftDown = false;
+
+    public LivingBlockMixin(EntityType<?> type, Level level) {
+        super(type, level);
+    }
 
     @WrapOperation(
         method = "interact",
@@ -35,27 +50,41 @@ public class LivingBlockMixin {
         ActionItem instance,
         Player player,
         LivingBlock target,
-        Operation<InteractionResult> original
+        Operation<InteractionResult> original,
+        @Local(argsOnly = true, name = "hand") final InteractionHand hand,
+        @Local(argsOnly = true, name = "location") final Vec3 location
     ) {
         long currentTimeMillis = System.currentTimeMillis();
-        boolean doubleClick = lastInteractPlayer != null && lastInteractPlayer.is(player) && currentTimeMillis - lastInteractTime < 1000;
-        boolean selected = target.isSelected();
-        if (target.canBeControlledBy(player) && !(instance instanceof GroupAction) && selected && doubleClick) {
-            List<LivingBlock> entities = target.level().getEntities(
-                EntityTypeTest.forClass(LivingBlock.class),
-                target.getBoundingBox().inflate(5, 5, 5),
-                tb -> ItemStack.isSameItem(tb.getItemStack(), target.getItemStack()) && tb.canBeControlledBy(player)
+        boolean proxyInteract = false;
+        if (target.canBeControlledBy(player) && !(instance instanceof GroupAction)) {
+            boolean doubleClick = this.aprilPlus$lastInteractPlayer != null
+                                  && this.aprilPlus$lastInteractPlayer.is(player)
+                                  && currentTimeMillis - this.aprilPlus$lastInteractTime < 200;
+            proxyInteract = InteractImprovements.interactLivingBlock(
+                player,
+                target,
+                doubleClick,
+                this.aprilPlus$lastShiftDown,
+                hand,
+                location
             );
-            for (LivingBlock entity : entities) {
-                entity.setOwner(player);
-                entity.setSelected(true);
-            }
-            this.lastInteractTime = currentTimeMillis;
-            this.lastInteractPlayer = player;
+        }
+        this.aprilPlus$lastInteractTime = currentTimeMillis;
+        this.aprilPlus$lastInteractPlayer = player;
+        this.aprilPlus$lastShiftDown = player.isShiftKeyDown();
+        if (proxyInteract) {
             return InteractionResult.SUCCESS;
         }
-        this.lastInteractTime = currentTimeMillis;
-        this.lastInteractPlayer = player;
         return original.call(instance, player, target);
+    }
+
+    @Override
+    public OnInteract aprilPlus$getOnInteract() {
+        return this.onInteract;
+    }
+
+    @Override
+    public InteractionResult aprilPlus$superInteract(final Player player, final InteractionHand hand, final Vec3 location) {
+        return super.interact(player, hand, location);
     }
 }
