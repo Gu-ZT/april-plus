@@ -3,22 +3,26 @@ package dev.dubhe.april.mixin;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
+import dev.dubhe.april.AprilPlus;
 import dev.dubhe.april.extension.LivingBlockExtension;
 import dev.dubhe.april.feat.interact.InteractImprovements;
+import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.livingblock.LivingBlock;
+import net.minecraft.world.entity.livingblock.Target;
 import net.minecraft.world.entity.livingblock.interact.OnInteract;
+import net.minecraft.world.entity.livingblock.movement.MovementData;
+import net.minecraft.world.entity.livingblock.movement.MovementStrategy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ActionItem;
 import net.minecraft.world.item.GroupAction;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -105,5 +109,27 @@ abstract class LivingBlockMixin extends Entity implements LivingBlockExtension {
     @Inject(method = "readAdditionalSaveData", at = @At("RETURN"))
     private void onLoad(ValueInput input, CallbackInfo ci) {
         this.entityData.set(DATA_PLAYER_INTERACTED, input.getBooleanOr("player_interacted", false));
+    }
+
+    @WrapOperation(
+        method = "tick",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/world/entity/livingblock/movement/MovementStrategy;moveTowardsTarget(Lnet/minecraft/world/entity/livingblock/LivingBlock;Lnet/minecraft/world/entity/livingblock/Target;Lnet/minecraft/world/phys/Vec3;)Z"
+        )
+    )
+    private <T extends MovementData> boolean tickWrap(
+        MovementStrategy<T> instance,
+        LivingBlock livingBlock,
+        Target target,
+        Vec3 vec3,
+        Operation<Boolean> original
+    ) {
+        try {
+            return original.call(instance, livingBlock, target, vec3);
+        } catch (Exception exception) {
+            AprilPlus.LOGGER.error(exception.getMessage(), exception);
+            return false;
+        }
     }
 }
