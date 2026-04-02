@@ -118,7 +118,7 @@ abstract class LivingBlockMixin extends Entity implements LivingBlockExtension {
             target = "Lnet/minecraft/world/entity/livingblock/movement/MovementStrategy;moveTowardsTarget(Lnet/minecraft/world/entity/livingblock/LivingBlock;Lnet/minecraft/world/entity/livingblock/Target;Lnet/minecraft/world/phys/Vec3;)Z"
         )
     )
-    private <T extends MovementData> boolean tickWrap(
+    private <T extends MovementData> boolean tickWrapMoveTowardsTarget(
         MovementStrategy<T> instance,
         LivingBlock livingBlock,
         Target target,
@@ -130,6 +130,23 @@ abstract class LivingBlockMixin extends Entity implements LivingBlockExtension {
         } catch (Exception exception) {
             AprilPlus.LOGGER.error(exception.getMessage(), exception);
             return false;
+        }
+    }
+
+    @WrapOperation(
+        method = "tick",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/world/entity/livingblock/movement/MovementStrategy;resetMovement(Lnet/minecraft/world/entity/livingblock/LivingBlock;)V"
+        )
+    )
+    private <T extends MovementData> void tickWrapResetMovement(
+        MovementStrategy<T> instance, LivingBlock livingBlock, Operation<Void> original
+    ) {
+        try {
+            original.call(instance, livingBlock);
+        } catch (Exception exception) {
+            AprilPlus.LOGGER.error(exception.getMessage(), exception);
         }
     }
 }
