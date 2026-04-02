@@ -89,9 +89,9 @@ public class FreeCam {
         calculateVectors();
 
         double distance = -2;
-        x += (double) this.forwards.x() * distance;
-        y += (double) this.forwards.y() * distance;
-        z += (double) this.forwards.z() * distance;
+        Vec3 horizontalForward = getHorizontalForward();
+        x += horizontalForward.x * distance;
+        z += horizontalForward.z * distance;
     }
 
     public void disable() {
@@ -152,7 +152,6 @@ public class FreeCam {
     long lastTime;
     private double forwardVelocity;
     private double leftVelocity;
-    private double upVelocity;
 
     public void onRenderTickStart() {
         if (!active) {
@@ -177,11 +176,12 @@ public class FreeCam {
         double slowdown = Math.pow(0.01, frameTime);
         forwardVelocity = combineMovement(forwardVelocity, forwardImpulse, frameTime, slowdown);
         leftVelocity = combineMovement(leftVelocity, leftImpulse, frameTime, slowdown);
-        upVelocity = combineMovement(upVelocity, upImpulse, frameTime, slowdown);
+        Vec3 horizontalForward = getHorizontalForward();
+        Vec3 horizontalLeft = getHorizontalLeft(horizontalForward);
 
-        double dx = (double) this.forwards.x() * forwardVelocity + (double) this.left.x() * leftVelocity;
-        double dy = (double) this.forwards.y() * forwardVelocity + upVelocity + (double) this.left.y() * leftVelocity;
-        double dz = (double) this.forwards.z() * forwardVelocity + (double) this.left.z() * leftVelocity;
+        double dx = horizontalForward.x * forwardVelocity + horizontalLeft.x * leftVelocity;
+        double dy = upImpulse * 50.0;
+        double dz = horizontalForward.z * forwardVelocity + horizontalLeft.z * leftVelocity;
         dx *= frameTime;
         dy *= frameTime;
         dz *= frameTime;
@@ -190,7 +190,6 @@ public class FreeCam {
             double factor = 50 / speed;
             forwardVelocity *= factor;
             leftVelocity *= factor;
-            upVelocity *= factor;
             dx *= factor;
             dy *= factor;
             dz *= factor;
@@ -198,6 +197,25 @@ public class FreeCam {
         x += dx;
         y += dy;
         z += dz;
+    }
+
+    private Vec3 getHorizontalForward() {
+        double forwardX = this.forwards.x();
+        double forwardZ = this.forwards.z();
+        double horizontalLengthSquared = forwardX * forwardX + forwardZ * forwardZ;
+
+        if (horizontalLengthSquared < 1.0E-6) {
+            // Keep forward movement stable when the camera looks almost straight up/down.
+            double yawRad = -Math.toRadians(this.yRot);
+            return new Vec3(Math.sin(yawRad), 0.0, Math.cos(yawRad));
+        }
+
+        double inverseLength = 1.0 / Math.sqrt(horizontalLengthSquared);
+        return new Vec3(forwardX * inverseLength, 0.0, forwardZ * inverseLength);
+    }
+
+    private Vec3 getHorizontalLeft(Vec3 horizontalForward) {
+        return new Vec3(horizontalForward.z, 0.0, -horizontalForward.x);
     }
 
     public void onClientTickStart() {
