@@ -19,6 +19,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.syncher.EntityDataAccessor;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -32,6 +33,9 @@ import javax.annotation.Nullable;
 abstract class LivingBlockMixin extends Entity implements LivingBlockExtension {
     @Shadow
     private OnInteract onInteract;
+    @Shadow
+    @Final
+    private static EntityDataAccessor<Boolean> DATA_PLAYER_INTERACTED;
     @Unique
     @Nullable
     private Player aprilPlus$lastInteractPlayer;
@@ -95,15 +99,11 @@ abstract class LivingBlockMixin extends Entity implements LivingBlockExtension {
 
     @Inject(method = "addAdditionalSaveData", at = @At("RETURN"))
     private void onSave(ValueOutput output, CallbackInfo ci) {
-        LivingBlock self = (LivingBlock) (Object) this;
-        boolean interacted = self.getEntityData().get(LivingBlockAccessor.getDataPlayerInteracted());
-        output.putBoolean("player_interacted", interacted);
+        output.putBoolean("player_interacted", this.entityData.get(DATA_PLAYER_INTERACTED));
     }
 
     @Inject(method = "readAdditionalSaveData", at = @At("RETURN"))
     private void onLoad(ValueInput input, CallbackInfo ci) {
-        LivingBlock self = (LivingBlock) (Object) this;
-        boolean interacted = input.getBooleanOr("player_interacted", false);
-        self.getEntityData().set(LivingBlockAccessor.getDataPlayerInteracted(), interacted);
+        this.entityData.set(DATA_PLAYER_INTERACTED, input.getBooleanOr("player_interacted", false));
     }
 }
