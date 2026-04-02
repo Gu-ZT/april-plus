@@ -16,10 +16,15 @@ import net.minecraft.world.item.ActionItem;
 import net.minecraft.world.item.GroupAction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.network.syncher.EntityDataAccessor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import javax.annotation.Nullable;
 
@@ -86,5 +91,19 @@ abstract class LivingBlockMixin extends Entity implements LivingBlockExtension {
     @Override
     public InteractionResult aprilPlus$superInteract(final Player player, final InteractionHand hand, final Vec3 location) {
         return super.interact(player, hand, location);
+    }
+
+    @Inject(method = "addAdditionalSaveData", at = @At("RETURN"))
+    private void onSave(ValueOutput output, CallbackInfo ci) {
+        LivingBlock self = (LivingBlock) (Object) this;
+        boolean interacted = self.getEntityData().get(LivingBlockAccessor.getDataPlayerInteracted());
+        output.putBoolean("player_interacted", interacted);
+    }
+
+    @Inject(method = "readAdditionalSaveData", at = @At("RETURN"))
+    private void onLoad(ValueInput input, CallbackInfo ci) {
+        LivingBlock self = (LivingBlock) (Object) this;
+        boolean interacted = input.getBooleanOr("player_interacted", false);
+        self.getEntityData().set(LivingBlockAccessor.getDataPlayerInteracted(), interacted);
     }
 }
