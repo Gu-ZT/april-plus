@@ -6,7 +6,8 @@
   "mixins": [
     "LivingBlockMixin",
     "PlayerMixin",
-    "SmeltNearbyLivingBlockBehaviorMixin"
+    "SmeltNearbyLivingBlockBehaviorMixin",
+    "LivingBlockAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
