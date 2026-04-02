@@ -78,12 +78,12 @@
   "key.april_plus.gamma_toggle": "伽马覆写",
   "key.april_plus.free_camera": "灵魂出窍",
   "overlay.no_blocks": "所选组在该区域内不包含任何方块",
-  "key.april_plus.group_none": "无",
-  "key.april_plus.group_red": "红色",
-  "key.april_plus.group_blue": "蓝色",
-  "key.april_plus.group_lime": "黄绿色",
-  "key.april_plus.group_yellow": "黄色",
-  "key.april_plus.group_purple": "紫色",
-  "key.april_plus.group_aqua": "青色",
-  "key.april_plus.group_all": "全部"
+  "key.april_plus.group_none": "选择队伍 无",
+  "key.april_plus.group_red": "选择队伍 红色",
+  "key.april_plus.group_blue": "选择队伍 蓝色",
+  "key.april_plus.group_lime": "选择队伍 黄绿色",
+  "key.april_plus.group_yellow": "选择队伍 黄色",
+  "key.april_plus.group_purple": "选择队伍 紫色",
+  "key.april_plus.group_aqua": "选择队伍 青色",
+  "key.april_plus.group_all": "选择队伍 全部"
 }
