@@ -11,7 +11,7 @@
   "environment": "*",
   "entrypoints": {
     "fabric-datagen": [
-      "dev.dubhe.april.client.AprilPlusDataGenerator"
+      "dev.dubhe.april.client.data.AprilPlusDataGenerator"
     ],
     "client": [
       "dev.dubhe.april.client.AprilPlusClient"
