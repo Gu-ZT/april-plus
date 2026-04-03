@@ -1,17 +1,43 @@
 # AprilPlus
 
-AprilPlus is a Fabric mod for Minecraft snapshot `26w14a`, focused on April Fools-style content plus client-side quality-of-life features.
+AprilPlus is a Fabric mod for Minecraft snapshot `26w14a`, focused on Living Block gameplay improvements, client-side controls, and stability fixes.
+
+## Version and Compatibility
+
+- Current version: `0.0.14`
+- Minecraft: `26w14a` (`26.1.1-alpha.26.14.a`)
+- Fabric Loader: `0.18.6+`
+- Fabric API: `0.145.2+26w14a`
 
 ## Main Features
+
+### Client Enhancements
 
 - Free Camera
 - Gamma Toggle
 - Fast living-block group switching (numpad `0~6` and `.`)
-- Double-click to quickly select nearby identical living blocks
-- `Shift + Right Click` to unselect, `Shift + Double Right Click` to unselect all
-- Furnaces do not smelt selected items
 
-> The list above is based on `CHANGE_LOG.md` and client keybinding code. See `CHANGE_LOG.md` for detailed historical changes.
+### Interaction Improvements
+
+- Double-click to quickly select nearby living blocks with the same item type
+- `Shift + Right Click` to unselect the current target
+- `Shift + Double Right Click` to batch-unselect nearby blocks in the same group and clear their group
+- Furnaces do not smelt selected living blocks
+
+### New in 0.0.14
+
+- Added a `Shift` sequence-command mode
+- While holding `Shift`, commands are queued instead of executed immediately, and queued actions run in order when blocks become idle
+
+## Stability Fixes (Highlights)
+
+- Fixed startup crashes (including early issue #2 related cases)
+- Fixed crash caused by `X + <number>`
+- Fixed crafter-related `NPE` and living-block tick `CCE` cases
+- Fixed repeated disappearing issues when living blocks become air/item states
+- Fixed an issue where living blocks could not be selected
+
+> For the full history, see `CHANGE_LOG.md`.
 
 ## Default Keybindings
 
