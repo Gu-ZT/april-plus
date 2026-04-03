@@ -1,4 +1,4 @@
-package dev.dubhe.april.mixin;
+package dev.dubhe.april.mixin.crashfix;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(LivingBlock.class)
-abstract class LivingBlockCCEMixin {
+abstract class LivingBlockMixin {
     @WrapOperation(
         method = "tick",
         at = @At(

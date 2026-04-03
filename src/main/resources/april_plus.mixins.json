@@ -4,11 +4,11 @@
   "package": "dev.dubhe.april.mixin",
   "compatibilityLevel": "JAVA_25",
   "mixins": [
-    "BeCraftingIngredientMixin",
-    "LivingBlockCCEMixin",
-    "LivingBlockMixin",
-    "PlayerMixin",
-    "SmeltNearbyLivingBlockBehaviorMixin"
+    "crashfix.BeCraftingIngredientMixin",
+    "crashfix.LivingBlockMixin",
+    "interact.LivingBlockMixin",
+    "smelt.SmeltNearbyLivingBlockBehaviorMixin",
+    "trans.PlayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

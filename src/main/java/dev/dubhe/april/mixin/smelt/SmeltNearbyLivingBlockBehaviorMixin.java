@@ -1,4 +1,4 @@
-package dev.dubhe.april.mixin;
+package dev.dubhe.april.mixin.smelt;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
