@@ -79,6 +79,8 @@ jobs:
           loaders: fabric
           version-type: ${{ env.VERSION_TYPE }}
           fail-mode: skip
+          java: 25
+          changelog: ${{ github.event.release.body }}
 
           dependencies: |
             fabric-api@${{ steps.properties.outputs.fabric_version }}(required){modrinth:P7dR8mSH}{curseforge:306612}
