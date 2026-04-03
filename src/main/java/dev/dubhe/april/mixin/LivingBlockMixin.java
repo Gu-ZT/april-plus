@@ -29,6 +29,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import javax.annotation.Nullable;
 
@@ -45,6 +46,9 @@ abstract class LivingBlockMixin extends Entity implements LivingBlockExtension {
 
     @Shadow
     public abstract BlockState getBlockState();
+
+    @Shadow
+    public abstract boolean isSelected();
 
     @Unique
     @Nullable
@@ -126,5 +130,10 @@ abstract class LivingBlockMixin extends Entity implements LivingBlockExtension {
             this.discard();
             ci.cancel();
         }
+    }
+
+    @Inject(method = "canBeControlledBy", at = @At("RETURN"), cancellable = true)
+    private void canBeControlledBy(Player player, CallbackInfoReturnable<Boolean> cir) {
+        if (!this.isSelected()) cir.setReturnValue(true);
     }
 }
