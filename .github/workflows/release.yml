@@ -82,6 +82,8 @@ jobs:
           fail-mode: skip
           java: 25
           changelog: ${{ github.event.release.body }}
+          game-versions: |
+            26w14a
 
           dependencies: |
             fabric-api@${{ steps.properties.outputs.fabric_version }}(required){modrinth:P7dR8mSH}{curseforge:306612}
@@ -89,8 +91,6 @@ jobs:
           modrinth-id: KTFN0xh3
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           modrinth-featured: true
-          modrinth-game-versions: |
-            26w14a
 
           curseforge-id: 1502586
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
