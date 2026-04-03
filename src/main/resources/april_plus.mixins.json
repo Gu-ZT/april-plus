@@ -8,6 +8,9 @@
     "crashfix.LivingBlockMixin",
     "interact.LivingBlockMixin",
     "smelt.SmeltNearbyLivingBlockBehaviorMixin",
+    "stack.CommandActionItemAccessor",
+    "stack.CommandActionItemMixin",
+    "stack.LivingBlockMixin",
     "trans.PlayerMixin"
   ],
   "injectors": {
@@ -15,5 +18,8 @@
   },
   "overwrites": {
     "requireAnnotations": true
+  },
+  "mixinextras": {
+    "minVersion": "0.5.3"
   }
 }
