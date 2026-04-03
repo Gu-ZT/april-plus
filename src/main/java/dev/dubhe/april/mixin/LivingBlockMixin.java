@@ -42,8 +42,11 @@ abstract class LivingBlockMixin extends Entity implements LivingBlockExtension {
     @Shadow
     public abstract ItemStack getItemStack();
 
-    @Shadow public abstract BlockState getBlockState();
+    @Shadow
+    public abstract BlockState getBlockState();
 
+    @Shadow
+    private @Nullable BlockState blockStateCache;
     @Unique
     @Nullable
     private Player aprilPlus$lastInteractPlayer;
@@ -117,7 +120,10 @@ abstract class LivingBlockMixin extends Entity implements LivingBlockExtension {
 
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
     private void tick(CallbackInfo ci) {
-        if (this.getItemStack().isEmpty() || this.getBlockState().isAir()) {
+        if (
+            this.getItemStack().isEmpty()
+            || (this.blockStateCache != null && this.getBlockState().isAir())
+        ) {
             this.discard();
             ci.cancel();
         }
