@@ -1,6 +1,5 @@
 package dev.dubhe.april.feat.interact;
 
-import dev.dubhe.april.extension.LivingBlockExtension;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.livingblock.LivingBlock;

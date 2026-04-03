@@ -1,4 +1,4 @@
-package dev.dubhe.april.extension;
+package dev.dubhe.april.feat.interact;
 
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;

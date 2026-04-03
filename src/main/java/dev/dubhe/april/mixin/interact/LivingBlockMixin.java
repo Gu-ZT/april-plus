@@ -3,7 +3,7 @@ package dev.dubhe.april.mixin.interact;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-import dev.dubhe.april.extension.LivingBlockExtension;
+import dev.dubhe.april.feat.interact.LivingBlockExtension;
 import dev.dubhe.april.feat.interact.InteractImprovements;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.world.InteractionHand;
