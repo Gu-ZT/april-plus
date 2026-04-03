@@ -38,7 +38,7 @@ jobs:
         uses: christian-draeger/read-properties@1.1.1
         with:
           path: gradle.properties
-          properties: 'mod_name minecraft_version fabric_version'
+          properties: 'mod_name minecraft_version curseforge_minecraft_version fabric_version'
 
       - name: Get Version
         id: version
@@ -77,7 +77,6 @@ jobs:
           name: "${{ steps.properties.outputs.mod_name }} For Fabric v${{ steps.version.outputs.version }}"
           version: ${{ steps.version.outputs.version }}
           loaders: fabric
-          game-versions: ${{ steps.properties.outputs.minecraft_version }}
           version-type: ${{ env.VERSION_TYPE }}
           fail-mode: skip
 
@@ -87,9 +86,11 @@ jobs:
           modrinth-id: KTFN0xh3
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           modrinth-featured: true
+          modrinth-game-versions: ${{ steps.properties.outputs.minecraft_version }}
 
           curseforge-id: 1502586
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          curseforge-game-versions: ${{ steps.properties.outputs.curseforge_minecraft_version }}
 
           files: |
             build/libs/${{ steps.properties.outputs.mod_name }}-${{ steps.version.outputs.version }}.jar
