@@ -14,6 +14,7 @@ import net.minecraft.world.entity.livingblock.LivingBlock;
 import net.minecraft.world.entity.livingblock.interact.OnInteract;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ActionItem;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.GroupAction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -45,8 +46,6 @@ abstract class LivingBlockMixin extends Entity implements LivingBlockExtension {
     @Shadow
     public abstract BlockState getBlockState();
 
-    @Shadow
-    private @Nullable BlockState blockStateCache;
     @Unique
     @Nullable
     private Player aprilPlus$lastInteractPlayer;
@@ -122,7 +121,7 @@ abstract class LivingBlockMixin extends Entity implements LivingBlockExtension {
     private void tick(CallbackInfo ci) {
         if (
             this.getItemStack().isEmpty()
-            || (this.blockStateCache != null && this.getBlockState().isAir())
+            || (this.getItemStack().getItem() instanceof BlockItem && this.getBlockState().isAir())
         ) {
             this.discard();
             ci.cancel();
