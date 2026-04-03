@@ -16,7 +16,7 @@ import java.util.function.Predicate;
 import javax.annotation.Nullable;
 
 @Mixin(SmeltNearbyLivingBlockBehavior.class)
-public class SmeltNearbyLivingBlockBehaviorMixin {
+abstract class SmeltNearbyLivingBlockBehaviorMixin {
     @WrapOperation(
         method = "canStartUsing",
         at = @At(
