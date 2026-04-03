@@ -88,11 +88,13 @@ jobs:
           modrinth-id: KTFN0xh3
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           modrinth-featured: true
-          modrinth-game-versions: 26w14a
+          modrinth-game-versions: |
+            26w14a
 
           curseforge-id: 1502586
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
-          curseforge-game-versions: 26.1-snapshot
+          curseforge-game-versions: |
+            26.1-snapshot
 
           files: |
             build/libs/${{ steps.properties.outputs.mod_name }}-${{ steps.version.outputs.version }}.jar
