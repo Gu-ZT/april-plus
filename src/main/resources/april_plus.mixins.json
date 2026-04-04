@@ -12,6 +12,7 @@
     "stack.CommandActionItemAccessor",
     "stack.CommandActionItemMixin",
     "stack.LivingBlockMixin",
+    "target.GhastMixin",
     "trans.PlayerMixin"
   ],
   "injectors": {
