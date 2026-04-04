@@ -2,6 +2,23 @@
 
 AprilPlus 是一个基于 Fabric 的 Minecraft 模组，面向 `26w14a` 快照版本，聚焦于活化方块（Living Block）玩法增强、客户端操作优化与稳定性修复。
 
+![](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/built-with/java25_vector.svg)
+![](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/fabric_vector.svg)
+
+![](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/unsupported/neoforge_vector.svg)
+![](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/unsupported/forge_vector.svg)
+
+[![](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/modrinth_vector.svg)][Modrinth]
+[![](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/curseforge_vector.svg)][CurseForge]
+
+[![](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/donate/patreon-plural_vector.svg)][Patreon]
+[![License](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)][License]
+
+[Modrinth]: https://modrinth.com/mod/april-plus
+[CurseForge]: https://www.curseforge.com/minecraft/mc-mods/april-plus
+[Patreon]: https://www.patreon.com/gugle2308
+[License]: https://spdx.org/licenses/LGPL-3.0-only.html
+
 ## 版本与兼容性
 
 - 当前版本：`0.0.14`
