@@ -6,6 +6,7 @@
   "mixins": [
     "crashfix.BeCraftingIngredientMixin",
     "crashfix.LivingBlockMixin",
+    "crashfix.LivingBlockTypeMixin",
     "interact.LivingBlockMixin",
     "smelt.SmeltNearbyLivingBlockBehaviorMixin",
     "stack.CommandActionItemAccessor",

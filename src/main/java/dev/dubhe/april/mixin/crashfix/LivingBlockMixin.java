@@ -3,16 +3,44 @@ package dev.dubhe.april.mixin.crashfix;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.dubhe.april.AprilPlus;
+import dev.dubhe.april.crashfix.LivingBlockExtension;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.livingblock.LivingBlock;
 import net.minecraft.world.entity.livingblock.Target;
 import net.minecraft.world.entity.livingblock.movement.MovementData;
 import net.minecraft.world.entity.livingblock.movement.MovementStrategy;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingBlock.class)
-abstract class LivingBlockMixin {
+abstract class LivingBlockMixin extends Entity implements LivingBlockExtension {
+    @Unique
+    private boolean aprilPlus$isBlock = false;
+
+    public LivingBlockMixin(EntityType<?> type, Level level) {
+        super(type, level);
+    }
+
+    @Override
+    public void aprilPlus$setIsBlock(boolean isBlock) {
+        this.aprilPlus$isBlock = isBlock;
+    }
+
+    @Shadow
+    public abstract ItemStack getItemStack();
+
+    @Shadow
+    public abstract BlockState getBlockState();
+
     @WrapOperation(
         method = "tick",
         at = @At(
@@ -101,6 +129,17 @@ abstract class LivingBlockMixin {
         } catch (Exception exception) {
             AprilPlus.LOGGER.error(exception.getMessage(), exception);
             return movement;
+        }
+    }
+
+    @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
+    private void tick(CallbackInfo ci) {
+        if (
+            this.getItemStack().isEmpty()
+            || (this.aprilPlus$isBlock && this.getBlockState().isAir())
+        ) {
+            this.discard();
+            ci.cancel();
         }
     }
 }
