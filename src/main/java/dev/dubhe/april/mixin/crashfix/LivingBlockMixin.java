@@ -4,6 +4,9 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.dubhe.april.AprilPlus;
 import dev.dubhe.april.crashfix.LivingBlockExtension;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.livingblock.LivingBlock;
@@ -13,6 +16,8 @@ import net.minecraft.world.entity.livingblock.movement.MovementStrategy;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -24,7 +29,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(LivingBlock.class)
 abstract class LivingBlockMixin extends Entity implements LivingBlockExtension {
     @Unique
-    private boolean aprilPlus$isBlock = false;
+    @SuppressWarnings("WrongEntityDataParameterClass")
+    private static final EntityDataAccessor<Boolean> APRIL_PLUS_IS_BLOCK = SynchedEntityData.defineId(
+        LivingBlock.class,
+        EntityDataSerializers.BOOLEAN
+    );
 
     public LivingBlockMixin(EntityType<?> type, Level level) {
         super(type, level);
@@ -32,7 +41,7 @@ abstract class LivingBlockMixin extends Entity implements LivingBlockExtension {
 
     @Override
     public void aprilPlus$setIsBlock(boolean isBlock) {
-        this.aprilPlus$isBlock = isBlock;
+        this.entityData.set(APRIL_PLUS_IS_BLOCK, isBlock);
     }
 
     @Shadow
@@ -40,6 +49,12 @@ abstract class LivingBlockMixin extends Entity implements LivingBlockExtension {
 
     @Shadow
     public abstract BlockState getBlockState();
+
+
+    @Inject(method = "defineSynchedData", at = @At("TAIL"))
+    private void defineSynchedData(SynchedEntityData.Builder entityData, CallbackInfo ci) {
+        entityData.define(APRIL_PLUS_IS_BLOCK, false);
+    }
 
     @WrapOperation(
         method = "tick",
@@ -136,10 +151,23 @@ abstract class LivingBlockMixin extends Entity implements LivingBlockExtension {
     private void tick(CallbackInfo ci) {
         if (
             this.getItemStack().isEmpty()
-            || (this.aprilPlus$isBlock && this.getBlockState().isAir())
+            || (
+                this.entityData.get(APRIL_PLUS_IS_BLOCK)
+                && this.getBlockState().isAir()
+            )
         ) {
             this.discard();
             ci.cancel();
         }
+    }
+
+    @Inject(method = "addAdditionalSaveData", at = @At("RETURN"))
+    private void onSave(ValueOutput output, CallbackInfo ci) {
+        output.putBoolean("april_plus_is_block", this.entityData.get(APRIL_PLUS_IS_BLOCK));
+    }
+
+    @Inject(method = "readAdditionalSaveData", at = @At("RETURN"))
+    private void onLoad(ValueInput input, CallbackInfo ci) {
+        this.entityData.set(APRIL_PLUS_IS_BLOCK, input.getBooleanOr("april_plus_is_block", false));
     }
 }
