@@ -12,6 +12,7 @@ AprilPlus 是一个基于 Fabric 的 Minecraft 模组，面向 `26w14a` 快照�
 [![](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/curseforge_vector.svg)][CurseForge]
 
 [![](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/donate/patreon-plural_vector.svg)][Patreon]
+
 [![License](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)][License]
 
 [Modrinth]: https://modrinth.com/mod/april-plus
