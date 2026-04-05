@@ -7,6 +7,8 @@
     "crashfix.BeCraftingIngredientMixin",
     "crashfix.LivingBlockMixin",
     "crashfix.LivingBlockTypeMixin",
+    "enchantment.EnchantmentTableBehaviorMixin",
+    "enchantment.EnchantRandomItemInteractionMixin",
     "interact.LivingBlockMixin",
     "smelt.SmeltNearbyLivingBlockBehaviorMixin",
     "stack.CommandActionItemAccessor",
