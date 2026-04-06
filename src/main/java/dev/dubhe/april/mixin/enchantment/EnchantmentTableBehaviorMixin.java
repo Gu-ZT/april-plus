@@ -1,10 +1,11 @@
 package dev.dubhe.april.mixin.enchantment;
 
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.livingblock.LivingBlock;
 import net.minecraft.world.entity.livingblock.behavior.EnchantmentTableBehavior;
 import net.minecraft.world.entity.player.Player;
@@ -12,7 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
-import net.minecraft.world.level.block.EnchantingTableBlock;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -64,12 +65,11 @@ abstract class EnchantmentTableBehaviorMixin {
         Vec3 above = entity.position().add(Vec3.Y_AXIS);
         boolean isItemToEnchantNearby = enchantablePos.closerThan(above, 0.7F);
         if (isItemToEnchantNearby) {
-            int bookcases = 0;
-            for (BlockPos offset : EnchantingTableBlock.BOOKSHELF_OFFSETS) {
-                if (EnchantingTableBlock.isValidBookShelf(level, entity.blockPosition(), offset)) {
-                    bookcases++;
-                }
-            }
+            int bookcases = (int) level.getEntities(
+                    EntityType.LIVING_BLOCK,
+                    entity.getBoundingBox().inflate(5.0F),
+                    Entity::isAlive
+            ).stream().filter(block -> block.getBlockState().is(Blocks.BOOKSHELF)).count();
 
             ItemStack itemStack = entity.livingBlockBeingEnchanted.getItemStack();
             int cost = EnchantmentHelper.getEnchantmentCost(level.getRandom(), 2, bookcases, itemStack);
